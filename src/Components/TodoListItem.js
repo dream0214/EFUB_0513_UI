@@ -40,14 +40,22 @@ const Remove = styled.div`
     }
 `
 
-const TodoListItem = () => {
+const TodoListItem = ({todo,onRemove,onToggle}) => {
+    const {id,text,checked}=todo;
     return(
         <ListItem>
-            <CheckBox>
-                <MdCheckBoxOutlineBlank/>
-                <Text>일정</Text>
+            {checked?
+                <CheckBox onClick={() =>onToggle(id)}>
+                    <MdCheckBox/>
+                    <Text style={{textDecoration:'line-through',color:"#dee2e6"}}>{text}</Text>
             </CheckBox>
-            <Remove>
+            :
+            <CheckBox onClick={() =>onToggle(id)}>
+                <MdCheckBoxOutlineBlank/>
+                <Text>{text}</Text>
+            </CheckBox>
+            }
+            <Remove onClick={() => onRemove(id)}>
                 <MdRemoveCircleOutline/>
             </Remove>
         </ListItem>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useCallback} from 'react';
 import {MdAdd} from 'react-icons/md';
 import styled from 'styled-components';
 
@@ -37,10 +37,24 @@ const Button = styled.button`
     }
 `
 
-const TodoInsert = () => {
+const TodoInsert = ({onInsert}) => {
+    const [value,setValue]=useState('');
+    
+
+    const onInputChange = useCallback((e) => {
+        setValue(e.target.value);
+        console.log(value);
+    },[]);
+
+    const onSubmit=useCallback((e) => {
+        onInsert(value);
+        setValue('');
+        e.preventDefault();
+    },[onInsert,value]);
+
     return(
-        <Insert>
-            <Input placeholder = "할 일을 입력하세요"/>
+        <Insert onSubmit={onSubmit}>
+            <Input placeholder = "할 일을 입력하세요" value={value} onChange={onInputChange}/>
             <Button type = "submit">
                 <MdAdd/>
             </Button>
